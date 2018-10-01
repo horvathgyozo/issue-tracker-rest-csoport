@@ -40,4 +40,7 @@ public class Label {
     @UpdateTimestamp
     private LocalDateTime updated_at;
 
+    @ManyToMany(mappedBy = "labels")
+    @JsonIgnore
+    private List<Issue> issues;
 }
