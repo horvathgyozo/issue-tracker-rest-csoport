@@ -3,9 +3,11 @@ package hu.elte.issuetrackerrest.controllers;
 import hu.elte.issuetrackerrest.entities.Issue;
 import hu.elte.issuetrackerrest.entities.Label;
 import hu.elte.issuetrackerrest.entities.Message;
+import hu.elte.issuetrackerrest.entities.User;
 import hu.elte.issuetrackerrest.repositories.IssueRepository;
 import hu.elte.issuetrackerrest.repositories.LabelRepository;
 import hu.elte.issuetrackerrest.repositories.MessageRepository;
+import hu.elte.issuetrackerrest.security.AuthenticatedUser;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +35,13 @@ public class IssueController {
     @Autowired
     private LabelRepository labelRepository;
     
+    @Autowired
+    private AuthenticatedUser authenticatedUser;
+    
     @GetMapping("")
     @Secured({ "ROLE_ADMIN" })
     public ResponseEntity<Iterable<Issue>> getAll() {
+        User.Role role = authenticatedUser.getUser().getRole();
         return ResponseEntity.ok(issueRepository.findAll());
     }
     
