@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,6 +44,14 @@ public class Issue {
     @Column
     @NotNull
     private String place;
+    
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Status status;
+    
+    public enum Status {
+        NEW, DOING, DONE
+    }
 
     @Column(updatable = false)
     @CreationTimestamp
